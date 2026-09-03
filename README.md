@@ -1,37 +1,35 @@
-# 🛡️ SOC Analyst Journey — Learning Log & Portfolio
+# Microsoft Sentinel — Learning Journey
 
-Hi, I'm Ifeanyichukwu Ifekwu — a cybersecurity learner working toward becoming a SOC (Security Operations Center) Analyst.
+This folder documents my hands-on journey learning Microsoft Sentinel as part 
+of my path toward becoming a SOC Analyst. Each file below covers a specific 
+milestone, including the real troubleshooting I worked through along the way.
 
-This repository documents my hands-on learning journey: labs, notes, tools, and concepts as I study and build practical skills. I'm sharing it publicly to track my growth, stay accountable, and build a portfolio that reflects real, ongoing work — not just certifications.
+## 📚 Contents
 
-## 🎯 Goals
-- Build a strong foundation in security monitoring and threat detection
-- Gain hands-on experience with SIEM tools, starting with Microsoft Sentinel
-- Develop practical skills in log analysis, incident response, and KQL
-- Document everything clearly enough that someone else could learn from it too
-
-## 🗂️ Repository Structure
-
-| Folder | Contents |
+| File | What it covers |
 |---|---|
-| [`01-fundamentals`](./01-fundamentals) | Core cybersecurity & networking concepts |
-| [`02-siem-microsoft-sentinel`](./02-siem-microsoft-sentinel) | Microsoft Sentinel setup, KQL queries, detection rules |
-| [`03-labs`](./03-labs) | Hands-on lab writeups and walkthroughs |
-| [`04-notes`](./04-notes) | General study notes, terminology, references |
-| [`05-certifications`](./05-certifications) | Certification prep and progress tracking |
+| [`00-what-is-siem.md`](./00-what-is-siem.md) | Core concepts: what a SIEM is and why it matters |
+| [`02-connecting-azure-activity.md`](./02-connecting-azure-activity.md) | Connecting Azure Activity logs; troubleshooting diagnostic settings scope confusion |
+| [`03-onboarding-host-via-arc.md`](./03-onboarding-host-via-arc.md) | Connecting a non-Azure host machine via Azure Arc; troubleshooting a PowerShell download failure |
+| [`04-first-analytics-rule-and-incident.md`](./04-first-analytics-rule-and-incident.md) | Building a custom detection rule; investigating and closing real incidents |
+| [`05-connecting-entra-id-auditlogs.md`](./05-connecting-entra-id-auditlogs.md) | Connecting Entra ID Audit Logs; working around a free-tier licensing limitation |
 
-## 🧰 Tools & Tech I'm Working With
-- Microsoft Sentinel (SIEM)
-- Kusto Query Language (KQL)
-- Microsoft Azure
-- *(more to be added as I progress)*
+## 🧠 Key skills demonstrated
+- Deploying and configuring a Log Analytics Workspace and Microsoft Sentinel
+- Connecting multiple data source types (subscription-level, host-level, identity-level)
+- Writing and testing KQL (Kusto Query Language) queries
+- Building custom Analytics Rules with entity mapping
+- Investigating, classifying, and closing security incidents
+- Real-world troubleshooting: diagnostic setting misconfigurations, agent 
+  installation failures, and licensing constraints
 
-## 📌 Status
-🟢 Actively learning — updated regularly as I complete new topics and labs.
+## 🔍 A note on troubleshooting
+I've intentionally kept the troubleshooting sections in each file, even the 
+messy parts — I think showing how a problem was diagnosed and solved is more 
+valuable than just showing the "happy path." Real SOC and cloud work involve
+constant troubleshooting, and I wanted this repo to reflect that honestly.
 
-## 🔗 Connect
-- LinkedIn: https://www.linkedin.com/in/ifeanyichukwu-ifekwu
-- GitHub: you're already here 🙂
-
----
-*This repo is a living document — expect frequent commits, edits, and improvements as I grow.*
+## ⏭️ What's next
+- A second Analytics Rule using Entra ID Audit Log data
+- Expanding into threat hunting queries
+- (Planned) Splunk — a second SIEM platform, to compare approaches
