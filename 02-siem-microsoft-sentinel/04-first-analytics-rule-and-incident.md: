@@ -1,0 +1,80 @@
+# Building My First Analytics Rule & Investigating Incidents
+
+## Goal
+Create a custom detection rule in Microsoft Sentinel that identifies a 
+security-relevant event, then investigate and properly close the resulting 
+incident(s) — practicing the full SOC Analyst detection-to-response workflow.
+
+## What is an Analytics Rule
+An Analytics Rule is what turns raw log data into something actionable. On 
+its own, a table like AzureActivity is just a huge stream of records — no one 
+can watch it manually in real time. An Analytics Rule runs a specific query 
+on a schedule, and if the query finds a match, it automatically creates an 
+Incident for an analyst to review. Without rules like this, a SOC Analyst 
+would have no way of knowing something suspicious happened unless they 
+happened to be looking at the right table at the right time.
+
+## The rule I built: Resource Group Deletion Detected
+I chose to detect resource group deletions because deleting resources is a 
+destructive, high-impact action. In a real environment, this could indicate 
+an attacker trying to cause damage or cover their tracks, or a misconfigured 
+automation/script deleting things it shouldn't. Even when it turns out to be 
+legitimate, it's the kind of action worth an analyst confirming.
+
+**Query used:**
+```kql
+AzureActivity
+| where OperationNameValue == "MICROSOFT.RESOURCES/SUBSCRIPTIONS/RESOURCEGROUPS/DELETE"
+| where ActivityStatusValue == "Success"
+```
+
+**Key settings:**
+- Severity: Medium
+- Tactic: Impact
+- Run frequency: Every 1 hour
+- Entity mapping: Account entity mapped to the `Caller` field, so incidents 
+  clearly show who performed the action
+
+## Testing the rule
+I deleted two resource groups (`test-activity-log-rg` and `rg-soc-vm`, both 
+no longer needed for my lab) to generate real trigger events.
+
+## Result: two incidents, not a bug
+Two separate incidents appeared, both titled "Resource Group Deletion 
+Detected." At first I assumed this might be a duplicate/bug, but on 
+investigation, they corresponded to two genuinely separate deletion events — 
+the rule was working correctly, not misfiring.
+
+### Key lesson
+Before assuming a detection issue is a bug, check whether multiple incidents 
+actually correspond to distinct real events. In a live SOC environment, 
+correctly investigating *why* something happened is just as important as 
+noticing that it happened — jumping to "this must be broken" without checking 
+first is a habit worth avoiding.
+
+## Investigating the incidents
+For each incident, I:
+1. Reviewed the incident overview (severity, status, mapped entities)
+2. Checked the underlying alert/event evidence to confirm exactly what 
+   triggered it
+3. Used the "Investigate" graph view to visually explore the connection 
+   between the account, the action, and the affected resource
+4. Set status to Active, added an investigation note confirming the activity 
+   was intentional lab cleanup performed by me
+5. Closed both incidents with classification **Benign Positive**
+
+### Benign Positive vs. False Positive
+These two classifications sound similar but mean different things. A 
+**False Positive** means the rule shouldn't have fired at all — the logic 
+was wrong, or the activity doesn't actually match what the rule claims to 
+detect. A **Benign Positive** means the rule worked exactly as intended and 
+correctly identified the activity it was designed to catch — but after 
+investigation, the activity itself turned out to be harmless (in my case, 
+intentional cleanup by me, not an attacker). Picking the right one matters 
+because False Positives should prompt a review of the rule itself, while 
+Benign Positives confirm the rule is working correctly and just needs human 
+judgment applied to the result.
+
+## Status
+✅ Complete — custom Analytics Rule built, tested with real events, and both 
+resulting incidents properly investigated and closed.
