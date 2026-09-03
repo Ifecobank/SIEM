@@ -1,0 +1,93 @@
+# Threat Hunting Session #1: Exploring My Own Environment
+
+## Goal
+Practice proactive threat hunting by writing my own exploratory KQL queries 
+against my Sentinel data, rather than relying only on pre-built Analytics 
+Rules — and investigate anything unfamiliar that turns up.
+
+## What is threat hunting
+Threat hunting is the practice of proactively searching through data for 
+signs of suspicious activity, rather than waiting for an automated rule to 
+alert you. It requires actively forming a hypothesis (e.g., "is there any 
+unusual account activity?") and writing a query to test it, then following 
+up on anything unexpected.
+
+## Hunt #1: Who's been most active?
+**Query:**
+```kql
+AzureActivity
+| summarize EventCount = count() by Caller
+| order by EventCount desc
+```
+
+**Troubleshooting:** My first attempt had a typo — I wrote `Eventcount ()by 
+Caller` (missing the `=` sign, and the word "count" got separated), and then 
+referenced a different, misspelled name (`Everycount`) in the next line. 
+KQL requires the exact same name used in `summarize X =` to be reused later, 
+and it's case-sensitive. Fixing the syntax resolved it immediately.
+
+**Result:** Three distinct callers:
+- `ifekwuifeanyi1@outlook.com` — 505 events (me, doing setup/testing work)
+- `78820a42-c185-4e7b-b6db-7fcf104a7e14` — 6 events (unfamiliar GUID)
+- `ab2c2dbe-2755-4545-97fc-e0eeff45283a` — 2 events (unfamiliar GUID)
+
+## Investigating the unfamiliar GUIDs
+A GUID appearing as a "Caller" typically means it's a **service principal** 
+or **managed identity** — an automated account, not a human. Rather than 
+assume this was fine, I investigated further.
+
+**Mistake made:** I first tried searching for the GUID in `AuditLogs` 
+(Entra ID data), which returned nothing. This was the wrong table — the GUID 
+came from `AzureActivity` (Azure Resource Manager level activity), a 
+different system than Entra ID's identity logs.
+
+**Corrected query:**
+```kql
+AzureActivity
+| where Caller == "78820a42-c185-4e7b-b6db-7fcf104a7e14"
+| project TimeGenerated, OperationNameValue, ResourceGroup, ActivityStatusValue
+```
+
+**Result:** The operation name `MICROSOFT.GUESTCONFIGURATION/GUESTCONFIGURATIONASSIGNMENTS/WRITE` 
+identified this as Azure's **Guest Configuration** service — a legitimate 
+Microsoft automation tied to Azure Policy/Arc compliance management on my 
+connected host machine. Not suspicious.
+
+### Key lesson
+Different data tables represent different systems (Azure Resource Manager 
+vs. Entra ID), and identifiers like GUIDs won't necessarily cross-reference 
+between them. When investigating an unfamiliar identity, it's important to 
+search within the same system/table the identifier originally came from.
+
+## Hunt #2: Unusual time patterns
+**Query:**
+```kql
+AzureActivity
+| summarize count() by bin(TimeGenerated, 1h)
+| order by TimeGenerated desc
+```
+Used to check for unexpected activity spikes (e.g., activity at unusual 
+hours). No anomalies found — activity aligned with my actual working sessions.
+
+## Hunt #3: Account and permission changes together
+**Query:**
+```kql
+AuditLogs
+| where OperationName in ("Add user", "Add member to role", "Update user")
+| project TimeGenerated, OperationName, InitiatedBy
+```
+Used to check for a suspicious pattern (e.g., an account being created and 
+immediately granted elevated permissions). Only my own test user creation 
+appeared — no unexpected role assignments.
+
+## Overall conclusion
+No malicious or unexpected activity found in this session. The two 
+unfamiliar service principal identities were confirmed to be legitimate 
+Azure background automation. Even though nothing suspicious turned up, this 
+exercise was valuable practice in the *process* of hunting — forming a 
+hypothesis, writing a query, and following up on anything unfamiliar rather 
+than dismissing it.
+
+## Status
+✅ Complete — first threat hunting session conducted, unfamiliar identities 
+investigated and confirmed benign.
