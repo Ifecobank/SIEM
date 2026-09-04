@@ -1,4 +1,4 @@
-📖 **Start here:** [SIEM Fundamentals — What I Learned](./15-siem-fundamentals-capstone.md)capstone.md)
+📖 **Start here:** [SIEM Fundamentals — What I Learned](./15-siem-fundamentals-capstone.md)
 # Microsoft Sentinel — Learning Journey
 
 This folder documents my hands-on journey learning Microsoft Sentinel as part 
