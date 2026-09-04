@@ -1,8 +1,12 @@
+📖 **Start here:** [SIEM Fundamentals — What I Learned](./02-siem-microsoft-sentinel/15-siem-fundamentals-capstone.md)
+
 # Microsoft Sentinel — Learning Journey
 
 This folder documents my hands-on journey learning Microsoft Sentinel as part 
 of my path toward becoming a SOC Analyst. Each file below covers a specific 
 milestone, including the real troubleshooting I worked through along the way.
+
+📖 **New here? Start with the [SIEM Fundamentals capstone summary](./15-siem-fundamentals-capstone.md)** for a full reflection tying everything below together.
 
 ## 📚 Contents
 
@@ -21,6 +25,8 @@ milestone, including the real troubleshooting I worked through along the way.
 | [`11-enabling-ueba.md`](./11-enabling-ueba.md) | Enabling User and Entity Behavior Analytics; clarifying a misleading prerequisite warning |
 | [`12-mitre-attack-mapping.md`](./12-mitre-attack-mapping.md) | Manually mapping Analytics Rules to MITRE ATT&CK techniques; working around a broken Preview feature |
 | [`13-cost-data-volume-awareness.md`](./13-cost-data-volume-awareness.md) | Understanding SIEM billing, data ingestion, and retention using real environment data |
+| [`14-general-siem-theory.md`](./14-general-siem-theory.md) | SIEM vs SOAR vs XDR vs EDR, core concepts, and the current industry landscape |
+| [`15-siem-fundamentals-capstone.md`](./15-siem-fundamentals-capstone.md) | Capstone summary reflecting on the full journey documented in this folder |
 
 ## 🧠 Key skills demonstrated
 - Deploying and configuring a Log Analytics Workspace and Microsoft Sentinel
@@ -35,6 +41,7 @@ milestone, including the real troubleshooting I worked through along the way.
 - Enabling and understanding UEBA (behavioral/anomaly-based detection)
 - Mapping detections to MITRE ATT&CK techniques and identifying coverage gaps
 - Understanding SIEM cost/data volume tradeoffs
+- General SIEM theory: SIEM vs SOAR vs XDR vs EDR, industry landscape
 - Real-world troubleshooting: diagnostic setting misconfigurations, agent 
   installation failures, licensing constraints, pipeline latency differences, 
   KQL syntax debugging, file encoding issues, cloud service permissions, and 
@@ -47,8 +54,6 @@ valuable than just showing the "happy path." Real SOC and cloud work involves
 constant troubleshooting, and I wanted this repo to reflect that honestly.
 
 ## ⏭️ What's next
-- General SIEM theory (SIEM vs SOAR vs XDR, vendors, log fundamentals)
-- SIEM Fundamentals capstone summary
 - (Planned) Splunk — a second SIEM platform, to compare approaches
 
 ## 🛠️ Environment notes
