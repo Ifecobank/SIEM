@@ -67,5 +67,6 @@ Azure Arc · Azure Logic Apps · Microsoft Entra ID · Azure Monitor Agent
 
 ## Full documentation
 Every step above — including the real errors encountered and how each was 
-diagnosed and resolved — is fully documented in the 
-[Microsoft Sentinel Capstone Summary](./02-siem-microsoft-sentinel/15-siem-fundamentals-capstone.md)
+diagnosed and resolved — is fully documented in 
+[02-siem-microsoft-sentinel/](./02-siem-microsoft-sentinel/), starting 
+with the [capstone summary](./02-siem-microsoft-sentinel/15-siem-fundamentals-capstone.md).
