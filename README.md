@@ -17,6 +17,8 @@ milestone, including the real troubleshooting I worked through along the way.
 | [`07-threat-hunting-session-1.md`](./07-threat-hunting-session-1.md) | First proactive threat hunting session; investigating unfamiliar service principal identities |
 | [`08-first-workbook.md`](./08-first-workbook.md) | Building a Sentinel Workbook (dashboard) to visualize environment activity |
 | [`09-watchlist-monitored-accounts.md`](./09-watchlist-monitored-accounts.md) | Building a Watchlist for account monitoring; troubleshooting CSV file encoding issues |
+| [`10-first-playbook-email-notification.md`](./10-first-playbook-email-notification.md) | Building a Playbook (SOAR automation) for email notifications; fixing a service identity permission issue |
+| [`11-enabling-ueba.md`](./11-enabling-ueba.md) | Enabling User and Entity Behavior Analytics; clarifying a misleading prerequisite warning |
 
 ## 🧠 Key skills demonstrated
 - Deploying and configuring a Log Analytics Workspace and Microsoft Sentinel
@@ -27,9 +29,11 @@ milestone, including the real troubleshooting I worked through along the way.
 - Proactive threat hunting — writing original exploratory queries and investigating unfamiliar identities
 - Building Workbooks (dashboards) to visualize environment activity
 - Building and integrating Watchlists as reusable reference data in KQL queries
+- Building Playbooks (SOAR automation) with Logic Apps, including service identity permissions
+- Enabling and understanding UEBA (behavioral/anomaly-based detection)
 - Real-world troubleshooting: diagnostic setting misconfigurations, agent 
   installation failures, licensing constraints, pipeline latency differences, 
-  KQL syntax debugging, and file encoding issues
+  KQL syntax debugging, file encoding issues, and cloud service permissions
 
 ## 🔍 A note on troubleshooting
 I've intentionally kept the troubleshooting sections in each file, even the 
@@ -38,7 +42,10 @@ valuable than just showing the "happy path." Real SOC and cloud work involves
 constant troubleshooting, and I wanted this repo to reflect that honestly.
 
 ## ⏭️ What's next
-- More diverse Analytics Rules (e.g., failed login patterns, privilege escalation)
+- MITRE ATT&CK coverage mapping
+- Cost & data volume awareness
+- General SIEM theory (SIEM vs SOAR vs XDR, vendors, log fundamentals)
+- SIEM Fundamentals capstone summary
 - (Planned) Splunk — a second SIEM platform, to compare approaches
 
 ## 🛠️ Environment notes
